@@ -1,11 +1,13 @@
 package test.resource.com.br.bankapp.ui.activity.login
 
+import android.text.Editable
 import test.resource.com.br.bankapp.model.Login
 
  class LoginPresenter : LoginContract.LoginPresenter {
      private lateinit var view: LoginContract.LoginView
 
-     override fun validateFileldUser() {
+     override fun validateFileldUser(text: String) {
+
      }
 
      override fun validateFieldPassword() {
