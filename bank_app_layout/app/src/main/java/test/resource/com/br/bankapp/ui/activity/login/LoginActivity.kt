@@ -11,6 +11,7 @@ import test.resource.com.br.bankapp.di.component.DaggerActivityComponent
 import test.resource.com.br.bankapp.di.module.LoginModule
 import test.resource.com.br.bankapp.model.Login
 import test.resource.com.br.bankapp.model.UserAccount
+import test.resource.com.br.bankapp.ui.activity.home.HomeActivity
 import javax.inject.Inject
 
 
@@ -46,7 +47,7 @@ class LoginActivity : AppCompatActivity(), LoginContract.LoginView {
     }
 
     override fun getUser(user: UserAccount) {
-        val intent = Intent(this, HomeActivity::class.java)
+        val intent = Intent(this, HomeActivity  ::class.java)
         intent.putExtra("user", user)
         startActivity(intent)    }
 
