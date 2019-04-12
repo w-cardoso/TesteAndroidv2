@@ -4,8 +4,8 @@ import dagger.Component
 import test.resource.com.br.bankapp.di.module.LoginModule
 import test.resource.com.br.bankapp.ui.activity.login.LoginActivity
 
-@Component(modules = arrayOf(LoginModule::class))
-interface ActivityComponent {
+@Component(modules = [LoginModule::class])
+interface LoginComponent {
 
     fun inject(loginActivity: LoginActivity)
 

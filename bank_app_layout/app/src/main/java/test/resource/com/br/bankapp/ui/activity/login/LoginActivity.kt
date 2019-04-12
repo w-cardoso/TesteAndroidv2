@@ -7,7 +7,7 @@ import android.view.View
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_login.*
 import test.resource.com.br.bankapp.R
-import test.resource.com.br.bankapp.di.component.DaggerActivityComponent
+import test.resource.com.br.bankapp.di.component.DaggerLoginComponent
 import test.resource.com.br.bankapp.di.module.LoginModule
 import test.resource.com.br.bankapp.model.Login
 import test.resource.com.br.bankapp.model.UserAccount
@@ -93,7 +93,7 @@ class LoginActivity : AppCompatActivity(), LoginContract.LoginView {
     }
 
     private fun injectDependency() {
-        val activityComponent = DaggerActivityComponent.builder()
+        val activityComponent = DaggerLoginComponent.builder()
                 .loginModule(LoginModule(this))
                 .build()
         activityComponent.inject(this)
