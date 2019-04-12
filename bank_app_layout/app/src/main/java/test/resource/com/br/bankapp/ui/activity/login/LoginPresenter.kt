@@ -9,6 +9,7 @@ import retrofit2.Response
 import test.resource.com.br.bankapp.model.Login
 import test.resource.com.br.bankapp.model.LoginResponse
 import test.resource.com.br.bankapp.service.ApiServiceInterface
+import test.resource.com.br.bankapp.util.SecurePreferences
 import test.resource.com.br.bankapp.validator.EmailValidator
 import test.resource.com.br.bankapp.validator.PasswordValidator
 import test.resource.com.br.bankapp.validator.Validator
@@ -40,8 +41,14 @@ class LoginPresenter : LoginContract.LoginPresenter {
         }
     }
 
-    override fun saveUser() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun saveUser(context: Context, user: String, password: String) {
+        if (validAllFields()) {
+            val preferences: SecurePreferences = SecurePreferences(
+                    context, "user-info",
+                    "userInformation", true)
+            preferences.put("username", user)
+            preferences.put("password", password)
+        }
     }
 
     override fun validateUser(login: Login) {

@@ -12,6 +12,7 @@ import test.resource.com.br.bankapp.di.module.LoginModule
 import test.resource.com.br.bankapp.model.Login
 import test.resource.com.br.bankapp.model.UserAccount
 import test.resource.com.br.bankapp.ui.activity.home.HomeActivity
+import test.resource.com.br.bankapp.util.SecurePreferences
 import javax.inject.Inject
 
 
@@ -25,19 +26,39 @@ class LoginActivity : AppCompatActivity(), LoginContract.LoginView {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         injectDependency()
-        presenter.attach(this)
         verifyFieldUser()
         verifyFieldPassword()
+        initializeSharedPreferences()
+        clickForLogin()
 
+    }
+
+    private fun clickForLogin() {
         login_btn.setOnClickListener {
             if (presenter.validAllFields()) {
                 val login = Login(login_edt_user.text.toString(), login_edt_password.toString())
+                presenter.saveUser(this, login_edt_user.text.toString(), login_edt_password.toString())
                 presenter.validateUser(login)
             }
+        }
+    }
 
+    private fun initializeSharedPreferences() {
+        val preferences = SecurePreferences(this, "user-info",
+                "userInformation", true)
+        if (preferences.getString("userame").isNullOrEmpty()) {
+            val username = preferences.getString("")
+
+        } else {
+            val username = preferences.getString("userame")
         }
 
+        if (preferences.getString("password").isNullOrEmpty()) {
+            val username = preferences.getString("")
 
+        } else {
+            val username = preferences.getString("password")
+        }
     }
 
     private fun verifyFieldPassword() {
@@ -75,7 +96,7 @@ class LoginActivity : AppCompatActivity(), LoginContract.LoginView {
         val activityComponent = DaggerActivityComponent.builder()
                 .loginModule(LoginModule(this))
                 .build()
-
         activityComponent.inject(this)
+        presenter.attach(this)
     }
 }

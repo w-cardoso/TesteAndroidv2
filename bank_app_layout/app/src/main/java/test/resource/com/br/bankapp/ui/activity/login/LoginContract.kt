@@ -12,7 +12,7 @@ interface LoginContract {
     interface LoginView : BaseContract.View {
         fun showToast(message: String)
         fun getUser(user: UserAccount)
-        fun showProgress (show: Boolean)
+        fun showProgress(show: Boolean)
     }
 
     interface LoginPresenter : BaseContract.Presenter<LoginContract.LoginView> {
@@ -26,7 +26,7 @@ interface LoginContract {
                 context: Context
         )
 
-        fun saveUser()
+        fun saveUser(context: Context, user: String, password: String)
 
         fun validateUser(login: Login)
 
