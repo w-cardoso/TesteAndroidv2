@@ -1,7 +1,10 @@
 package test.resource.com.br.bankapp.ui.activity.login
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.view.View
+import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_login.*
 import test.resource.com.br.bankapp.R
 import test.resource.com.br.bankapp.di.component.DaggerActivityComponent
@@ -10,9 +13,12 @@ import test.resource.com.br.bankapp.model.Login
 import test.resource.com.br.bankapp.model.UserAccount
 import javax.inject.Inject
 
+
 class LoginActivity : AppCompatActivity(), LoginContract.LoginView {
 
-    @Inject lateinit var presenter: LoginContract.LoginPresenter
+
+    @Inject
+    lateinit var presenter: LoginContract.LoginPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,11 +42,22 @@ class LoginActivity : AppCompatActivity(), LoginContract.LoginView {
 
 
     override fun showToast(message: String) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        Toast.makeText(this, message, Toast.LENGTH_LONG)
     }
 
     override fun getUser(user: UserAccount) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val intent = Intent(this, HomeActivity::class.java)
+        intent.putExtra("user", user)
+        startActivity(intent)    }
+
+    override fun showProgress(show: Boolean) {
+        if (show) {
+            login_pgb.visibility = View.VISIBLE
+            login_btn.visibility = View.GONE
+        } else {
+            login_pgb.visibility = View.GONE
+            login_btn.visibility = View.VISIBLE
+        }
     }
 
     private fun injectDependency() {

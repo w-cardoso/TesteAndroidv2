@@ -20,7 +20,7 @@ interface ApiServiceInterface {
     fun login(@Body login: Login): Call<LoginResponse>
 
     @GET("statements/{id}")
-    fun getMovies(@Path("id") id: Int): Observable<ListStatementResponse>
+    fun getStatements(@Path("id") id: Int): Observable<ListStatementResponse>
 
     companion object Factory {
         fun create(): ApiServiceInterface {
