@@ -45,10 +45,11 @@ class LoginPresenter : LoginContract.LoginPresenter {
     }
 
     override fun validateUser(login: Login) {
+        view.showProgress(true)
         val loginResponse = ApiServiceInterface.create().login(login)
-
         loginResponse.enqueue(object : Callback<LoginResponse> {
             override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
+
                 response.body()?.userAccount?.let { view.getUser(it) }
                 response.body()?.errorResponse?.let { view.showToast(it.message) }
 

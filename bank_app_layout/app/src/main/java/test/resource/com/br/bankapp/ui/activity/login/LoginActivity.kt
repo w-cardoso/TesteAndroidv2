@@ -29,8 +29,15 @@ class LoginActivity : AppCompatActivity(), LoginContract.LoginView {
         verifyFieldUser()
         verifyFieldPassword()
 
-        val login = Login(login_edt_user.text.toString(), login_edt_password.toString())
-        presenter.validateUser(login)
+        login_btn.setOnClickListener {
+            if (presenter.validAllFields()) {
+                val login = Login(login_edt_user.text.toString(), login_edt_password.toString())
+                presenter.validateUser(login)
+            }
+
+        }
+
+
     }
 
     private fun verifyFieldPassword() {
@@ -43,13 +50,16 @@ class LoginActivity : AppCompatActivity(), LoginContract.LoginView {
 
 
     override fun showToast(message: String) {
+        showProgress(false)
         Toast.makeText(this, message, Toast.LENGTH_LONG)
     }
 
     override fun getUser(user: UserAccount) {
-        val intent = Intent(this, HomeActivity  ::class.java)
+        showProgress(false)
+        val intent = Intent(this, HomeActivity::class.java)
         intent.putExtra("user", user)
-        startActivity(intent)    }
+        startActivity(intent)
+    }
 
     override fun showProgress(show: Boolean) {
         if (show) {
