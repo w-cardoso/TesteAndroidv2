@@ -3,7 +3,9 @@ package test.resource.com.br.bankapp.ui.activity.login
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.text.Editable
 import android.view.View
+import android.widget.EditText
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_login.*
 import test.resource.com.br.bankapp.R
@@ -36,8 +38,8 @@ class LoginActivity : AppCompatActivity(), LoginContract.LoginView {
     private fun clickForLogin() {
         login_btn.setOnClickListener {
             if (presenter.validAllFields()) {
+                presenter.saveUser(this, login_edt_user.text.toString(), login_edt_password.text.toString())
                 val login = Login(login_edt_user.text.toString(), login_edt_password.toString())
-                presenter.saveUser(this, login_edt_user.text.toString(), login_edt_password.toString())
                 presenter.validateUser(login)
             }
         }
@@ -46,18 +48,16 @@ class LoginActivity : AppCompatActivity(), LoginContract.LoginView {
     private fun initializeSharedPreferences() {
         val preferences = SecurePreferences(this, "user-info",
                 "userInformation", true)
-        if (preferences.getString("userame").isNullOrEmpty()) {
-            val username = preferences.getString("")
+        val username = preferences.getString("username")
+        val password = preferences.getString("password")
+        verifyPreferences(username, password)
 
-        } else {
-            val username = preferences.getString("userame")
-        }
+    }
 
-        if (preferences.getString("password").isNullOrEmpty()) {
-            val username = preferences.getString("")
-
-        } else {
-            val username = preferences.getString("password")
+    private fun verifyPreferences(username: String?, password: String?) {
+        if (username != null || password != null) {
+            login_edt_user.setText(username)
+            login_edt_password.setText(password)
         }
     }
 
