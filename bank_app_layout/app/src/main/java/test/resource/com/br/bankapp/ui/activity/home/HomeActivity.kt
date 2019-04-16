@@ -8,6 +8,8 @@ import test.resource.com.br.bankapp.di.component.DaggerHomeComponent
 import test.resource.com.br.bankapp.di.module.HomeModule
 import test.resource.com.br.bankapp.model.Statement
 import test.resource.com.br.bankapp.model.UserAccount
+import java.text.NumberFormat
+import java.util.*
 import javax.inject.Inject
 
 class HomeActivity : AppCompatActivity(), HomeContract.HomeViewInterface {
@@ -32,13 +34,13 @@ class HomeActivity : AppCompatActivity(), HomeContract.HomeViewInterface {
     }
 
     private fun getUserAccount(): UserAccount? {
-        return intent.extras?.getParcelable<UserAccount>("user")
+        return intent.extras?.getParcelable("user")
     }
 
     private fun fillFields(user: UserAccount) {
         home_txt_name.text = user.name
-        home_txt_title_account.text = user.bankAccount + "/" + user.agency
-        home_txt_balance.text = user.balance.toString()
+        home_txt_account.text = user.bankAccount + " / " + user.agency
+        home_txt_balance.text = transformInCoin(user.balance)
     }
 
     override fun showToast(s: String) {
@@ -47,5 +49,11 @@ class HomeActivity : AppCompatActivity(), HomeContract.HomeViewInterface {
 
     override fun displayStatement(statement: List<Statement>) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    private fun transformInCoin(balance: Double): String {
+        val value = balance
+        val coinBr = Locale("pt", "BR")
+        return NumberFormat.getCurrencyInstance(coinBr).format(value)
     }
 }

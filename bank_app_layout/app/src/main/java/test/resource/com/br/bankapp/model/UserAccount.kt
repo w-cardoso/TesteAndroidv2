@@ -2,6 +2,8 @@ package test.resource.com.br.bankapp.model
 
 import android.os.Parcel
 import android.os.Parcelable
+import java.text.NumberFormat
+import java.util.*
 
 class UserAccount(val userId: Int,
                   val name: String,
